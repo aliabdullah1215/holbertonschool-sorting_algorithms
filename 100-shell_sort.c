@@ -14,27 +14,19 @@ void shell_sort(int *array, size_t size)
 	if (array == NULL || size < 2)
 		return;
 
-	/* تحديد أكبر فجوة (gap) في تسلسل Knuth */
 	while (gap < size / 3)
 		gap = gap * 3 + 1;
 
-	/* تنفيذ خوارزمية Shell sort */
 	while (gap >= 1)
 	{
 		for (i = gap; i < size; i++)
 		{
 			temp = array[i];
-			j = i;
-
-			while (j >= gap && array[j - gap] > temp)
-			{
+			for (j = i; j >= gap && array[j - gap] > temp; j -= gap)
 				array[j] = array[j - gap];
-				j -= gap;
-			}
 			array[j] = temp;
 		}
-
-		print_array(array, size);
-		gap = (gap - 1) / 3; /* تقليل الفجوة حسب تسلسل Knuth */
+		print_array(array, size); /* ✅ هنا فقط */
+		gap = (gap - 1) / 3;
 	}
 }
